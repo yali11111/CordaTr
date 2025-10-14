@@ -1,0 +1,44 @@
+apply plugin: 'org.springframework.boot'
+
+sourceSets {
+    main {
+        resources {
+            srcDir rootProject.file("config/dev")
+        }
+    }
+}
+
+dependencies {
+    // Corda dependencies.
+    implementation "$corda_release_group:corda-core:$corda_release_version"
+    implementation "$corda_release_group:corda-rpc:$corda_release_version"
+
+    // CorDapp dependencies.
+    implementation project(":contracts")
+    implementation project(":workflows")
+
+    implementation("org.springframework.boot:spring-boot-starter-websocket:$spring_boot_version") {
+        exclude group: "org.springframework.boot", module: "spring-boot-starter-logging"
+    }
+
+    implementation "org.apache.logging.log4j:log4j-slf4j2-impl:${log4j_version}"
+    implementation "org.apache.logging.log4j:log4j-web:${log4j_version}"
+    implementation "org.slf4j:jul-to-slf4j:$slf4j_version"
+    implementation "org.bouncycastle:bcprov-jdk18on:1.75"
+}
+
+springBoot {
+    mainClass = "net.corda.samples.tictacthor.webserver.ServerKt"
+}
+
+task bootRunDevRel(type: JavaExec, dependsOn: jar) {
+    classpath = sourceSets.main.runtimeClasspath
+    main = 'net.corda.samples.tictacthor.webserver.ServerKt'
+    args '--server.port=8080', '--config.rpc.host=localhost', '--config.rpc.port=10006', '--config.rpc.username=user1', '--config.rpc.password=test'
+}
+
+task bootRunSOE(type: JavaExec, dependsOn: jar) {
+    classpath = sourceSets.main.runtimeClasspath
+    main = 'net.corda.samples.tictacthor.webserver.ServerKt'
+    args '--server.port=8090', '--config.rpc.host=localhost', '--config.rpc.port=10009', '--config.rpc.username=user1', '--config.rpc.password=test'
+}
