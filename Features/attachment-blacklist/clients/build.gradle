@@ -1,0 +1,38 @@
+apply plugin: 'org.springframework.boot'
+apply plugin: 'kotlin'
+
+sourceSets {
+    main {
+        resources {
+            srcDir rootProject.file("config/dev")
+        }
+    }
+}
+
+dependencies {
+    // Corda dependencies.
+    implementation "$corda_release_group:corda-rpc:$corda_release_version"
+    implementation "$corda_release_group:corda-core:$corda_release_version"
+
+    // CorDapp dependencies.
+    implementation project(":contracts")
+    implementation project(":workflows")
+
+    implementation("org.springframework.boot:spring-boot-starter-websocket:$spring_boot_version") {
+        exclude group: "org.springframework.boot", module: "spring-boot-starter-logging"
+    }
+
+    implementation "org.apache.logging.log4j:log4j-slf4j2-impl:${log4j_version}"
+    implementation "org.apache.logging.log4j:log4j-web:${log4j_version}"
+    implementation "org.slf4j:jul-to-slf4j:$slf4j_version"
+}
+
+springBoot {
+    mainClass = "net.corda.samples.blacklist.webserver.Server"
+}
+
+task uploadBlacklist(type: JavaExec, dependsOn: assemble) {
+    classpath = sourceSets.main.runtimeClasspath
+    main = 'net.corda.samples.blacklist.clients.ClientKt'
+    args 'localhost:10006', 'localhost:10009', 'localhost:10012'
+}
