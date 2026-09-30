@@ -103,3 +103,11 @@ flow start IssuePolicy networkId: <xxxx-xxxx-NETWORK-ID-xxxxx>, careProvider: Ca
 ```
 run vaultQuery contractStateType: net.corda.samples.businessmembership.states.InsuranceState
 ```
+
+
+
+
+
+
+
+The project is a Kotlin-based application built on Corda, designed to manage a network of participants in the insurance industry. It uses Corda Business Networks to manage members, their identities, and their roles, while Corda flows are used to perform business operations.
