@@ -101,5 +101,94 @@ flow start SendCargo pickupFrom: SellerInventory, shipTo: BuyerWarehouse, cargo:
 ## Now, the entire business chain is completed. 
 
 
+Purpose
+supplychain models a multi-stage supply-chain process using several Corda states.
+
+The domain includes:
+
+Cargo
+Internal Message
+Invoice
+Payment
+Shipping Request
+
+Contract states
+contracts/src/main/kotlin/
+└── net/corda/samples/supplychain/
+    ├── contracts/
+    │   ├── CargoStateContract.kt
+    │   ├── InternalMessageStateContract.kt
+    │   ├── InvoiceStateContract.kt
+    │   ├── PaymentStateContract.kt
+    │   └── ShippingRequestStateContract.kt
+    │
+    └── states/
+        ├── CargoState.kt
+        ├── InternalMessageState.kt
+        ├── InvoiceState.kt
+        ├── PaymentState.kt
+        └── ShippingRequestState.kt
+
+Each state has a corresponding contract.
+
+This follows the normal Corda pattern:
+
+State
+  │
+  └── Contract
+          │
+          └── Transaction verification
+
+Business concepts
+Cargo
+Represents goods being transported through the supply chain.
+
+Shipping Request
+Represents a request to arrange or initiate shipment.
+
+Invoice
+Represents a financial obligation associated with a supply-chain transaction.
+
+Payment
+Represents payment associated with an invoice or other business event.
+
+Internal Message
+Represents information exchanged between participants without necessarily representing a physical or financial asset.
+
+Workflows
+The primary business workflows are:
+
+InternalMessage.kt
+SendCargo.kt
+SendInvoice.kt
+SendPayment.kt
+SendShippingRequest.kt
+
+A typical business process can therefore be understood conceptually as:
+
+Shipping Request
+       │
+       ▼
+     Cargo
+       │
+       ▼
+    Invoice
+       │
+       ▼
+    Payment
+
+The exact transaction dependencies should be confirmed against the individual flow implementations.
+
+Account functionality
+The application also provides account-management flows:
+
+CreateNewAccount.kt
+NewKeyForAccount.kt
+QueryByAcctUUID.kt
+ShareAccount.kt
+ViewMyAccounts.kt
+
+These flows allow a node to manage multiple logical accounts.
+
 
 

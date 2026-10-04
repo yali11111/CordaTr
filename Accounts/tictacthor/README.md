@@ -55,7 +55,88 @@ This project is inspired and evolved from a simple [tic-tac-toe](https://github.
 
 
 
+Purpose
+tictacthor implements a distributed Tic-Tac-Toe game on Corda.
 
+Unlike the other applications, it includes a client/web layer in addition to contracts and workflows.
+
+Structure
+tictacthor/
+├── clients/
+│   └── src/main/
+│       ├── kotlin/
+│       │   └── net/corda/samples/tictacthor/
+│       │       ├── Client.kt
+│       │       └── webserver/
+│       │           ├── Controller.kt
+│       │           ├── NodeRPCConnection.kt
+│       │           └── Server.kt
+│       │
+│       └── resources/static/
+│           ├── corda_logo.png
+│           ├── index.css
+│           ├── index.html
+│           └── index.js
+│
+├── contracts/
+│   └── ...
+│
+└── workflows/
+    └── ...
+
+Contract layer
+The game is represented by:
+
+BoardState.kt
+BoardContract.kt
+
+BoardState represents the current game board.
+
+BoardContract defines the transaction rules that govern changes to the board.
+
+Game flows
+The main game workflows are:
+
+StartGameFlow.kt
+SubmitTurnFlow.kt
+EndGameFlow.kt
+SyncGame.kt
+
+Conceptually:
+
+Start Game
+    │
+    ▼
+BoardState
+    │
+    ├── Submit Turn
+    │       │
+    │       ▼
+    │    BoardState
+    │
+    └── End Game
+            │
+            ▼
+        Final State
+
+Web client
+The client module provides a web interface for interacting with the game.
+
+The application contains:
+
+an HTTP/web server;
+
+a Corda RPC connection;
+
+controllers;
+
+HTML;
+
+CSS;
+
+JavaScript.
+
+The web application therefore acts as a client of the Corda node rather than directly implementing ledger rules.
 
 
 

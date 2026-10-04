@@ -70,3 +70,45 @@ flow start WorkAroundQueryByID acctname: BuyerFinance
 Some temporary utilities have been provided to help you with this. See: [accountObservedQueryBy] and [accountObservedTrackBy].
 
 
+Purpose
+sharestatewithaccount focuses specifically on the interaction between Corda states and Corda Accounts.
+
+Its contract model currently mirrors much of the supplychain project.
+
+The project contains the same five major state concepts:
+
+CargoState
+InternalMessageState
+InvoiceState
+PaymentState
+ShippingRequestState
+
+The distinguishing feature is the account-oriented workflow layer.
+
+Account workflows
+accountUtilities/
+├── CreateNewAccount.kt
+├── NewKeyForAccount.kt
+├── ShareAccount.kt
+├── ViewInboxByAccount.kt
+├── ViewMyAccounts.kt
+└── WorkAroundQueryByID.kt
+
+These workflows demonstrate account creation, key management, account sharing, and account-specific state access.
+
+State-sharing workflow
+SendToNonParticipantAcct.kt is particularly important to this application.
+
+Its name indicates a scenario in which information is sent to an account that is not necessarily a participant of the corresponding ledger state.
+
+This distinction is important in Corda because:
+
+state participants determine who is associated with a state;
+
+transaction distribution determines who receives transaction information;
+
+an account is a logical identity hosted by a node;
+
+an account's host node and the account itself are not interchangeable concepts.
+
+The implementation should therefore be consulted when determining the exact privacy and participant semantics.
