@@ -43,3 +43,41 @@ This CorDapp recreates the game of Tic Tac Toe via Corda. It primarily demonstra
   <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/32/Tic_tac_toe.svg/1024px-Tic_tac_toe.svg.png" alt="Corda" width="200">
 </p>
 
+
+.
+├── README.md
+├── constants.properties
+│
+├── obligation-accounts/
+│   ├── contracts/
+│   ├── workflows/
+│   ├── config/
+│   ├── gradle/
+│   ├── lib/
+│   └── build.gradle
+│
+├── sharestatewithaccount/
+│   ├── contracts/
+│   ├── workflows/
+│   ├── config/
+│   ├── gradle/
+│   ├── lib/
+│   └── build.gradle
+│
+├── supplychain/
+│   ├── contracts/
+│   ├── workflows/
+│   ├── config/
+│   ├── gradle/
+│   ├── lib/
+│   └── build.gradle
+│
+└── tictacthor/
+    ├── clients/
+    ├── contracts/
+    ├── workflows/
+    ├── config/
+    ├── gradle/
+    ├── lib/
+    └── build.gradle
+

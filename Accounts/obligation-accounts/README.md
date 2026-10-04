@@ -75,3 +75,50 @@ We can use the two query flows to check each account's holdings, by changing the
 flow start ViewIOUByAccount acctname: bob6424
 flow start ViewCashBalanceByAccount acctname: bob6424
 ```
+
+
+Purpose
+obligation-accounts demonstrates an obligation/IOU application implemented using Corda Accounts.
+
+The application models an IOU between parties and provides flows for issuing, transferring, settling, and synchronizing IOUs.
+
+Structure
+obligation-accounts/
+├── contracts/
+│   └── src/
+│       ├── main/kotlin/
+│       │   └── net/corda/samples/obligation/
+│       │       ├── contract/
+│       │       │   └── IOUContract.kt
+│       │       └── states/
+│       │           └── IOUState.kt
+│       └── test/kotlin/
+│           └── net/corda/samples/obligation/
+│               └── IOUStateTests.kt
+│
+└── workflows/
+    └── src/
+        ├── main/kotlin/
+        │   └── net/corda/samples/obligation/
+        │       ├── accountUtil/
+        │       └── flows/
+        │           ├── IOUIssueFLow.kt
+        │           ├── IOUSettleFlow.kt
+        │           ├── IOUTransferFlow.kt
+        │           ├── MoneyDropFlow.kt
+        │           └── SyncIOU.kt
+        │
+        └── integrationTest/
+
+Contract layer
+IOUState.kt represents an IOU on the ledger.
+
+IOUContract.kt defines the transaction rules governing the IOU.
+
+The contract layer is responsible for validating transactions independently of the flow implementation.
+
+Workflow layer
+The main workflows include:
+
+IOUIssueFLow
+Creates a new IOU.
