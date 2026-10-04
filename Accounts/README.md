@@ -1,3 +1,30 @@
+
+Overview
+This repository contains several Kotlin-based CorDapps demonstrating different uses of Corda, including obligations, supply-chain workflows, Corda Accounts, and a distributed Tic-Tac-Toe application.
+
+The repository is organized as a collection of largely independent Corda applications:
+
+obligation-accounts — demonstrates IOU/obligation management using Corda Accounts.
+
+supplychain — demonstrates a multi-party supply-chain workflow involving cargo, invoices, payments, shipping requests, and internal messages.
+
+sharestatewithaccount — demonstrates sharing application state with Corda Accounts, including scenarios involving accounts that are not direct state participants.
+
+tictacthor — demonstrates a Corda-based Tic-Tac-Toe application with a web client.
+
+Each application generally follows Corda's separation between:
+
+Contracts and states — the shared ledger model and transaction validation rules.
+
+Workflows — the flows that construct, sign, distribute, and finalize transactions.
+
+Tests — contract, state, flow, and integration tests.
+
+Configuration — logging and Gradle/build configuration.
+
+
+
+
 ## Accounts CorDapp Samples 
 
 This folder features Corda Accounts sample projects. Learn more about [Accounts](https://training.corda.net/libraries/accounts-lib/).
