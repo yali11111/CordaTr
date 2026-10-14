@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -Eeuo pipefail
 
-ROOT="insurancebusinessnetwork"
+ROOT="."
 BACKEND="$ROOT/backend"
 
 if [[ ! -d "$ROOT/workflows" || ! -d "$ROOT/contracts" ]]; then
