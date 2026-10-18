@@ -28,6 +28,8 @@ dependencies {
     // Client RPC de Corda 4.12.5
     implementation("net.corda:corda-rpc:4.12.5")
 
+    implementation(project(":workflows"))
+    implementation(project(":contracts"))
     testImplementation("org.springframework.boot:spring-boot-starter-test")
 }
 
