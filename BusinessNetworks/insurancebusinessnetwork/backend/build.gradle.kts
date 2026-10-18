@@ -1,3 +1,4 @@
+
 plugins {
     id("org.springframework.boot") version "3.2.5"
     id("io.spring.dependency-management") version "1.1.4"
@@ -9,6 +10,7 @@ group = "net.corda.samples"
 version = "1.0.0"
 
 repositories {
+    mavenLocal()
     mavenCentral()
     maven("https://download.corda.net/maven/corda-releases")
     maven("https://download.corda.net/maven/corda-dependencies")
@@ -25,11 +27,13 @@ dependencies {
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
     implementation("org.jetbrains.kotlin:kotlin-reflect")
 
-    // Client RPC de Corda 4.12.5
+    // Client RPC Corda 4.12.5
     implementation("net.corda:corda-rpc:4.12.5")
 
-    implementation(project(":workflows"))
-    implementation(project(":contracts"))
+    // JAR générés par le build Corda principal
+    implementation(files("../contracts/build/libs/contracts-1.0.jar"))
+    implementation(files("../workflows/build/libs/workflows-1.0.jar"))
+
     testImplementation("org.springframework.boot:spring-boot-starter-test")
 }
 
@@ -42,3 +46,4 @@ tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile>().configureEach 
 tasks.test {
     useJUnitPlatform()
 }
+
