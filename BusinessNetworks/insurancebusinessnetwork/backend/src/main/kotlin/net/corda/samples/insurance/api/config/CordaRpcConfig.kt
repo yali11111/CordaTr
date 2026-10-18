@@ -14,7 +14,7 @@ class CordaRpcConfig(
     @Value("\${corda.rpc.host:localhost}")
     private val host: String,
 
-    @Value("\${corda.rpc.port:10006}")
+    @Value("\${corda.rpc.port:10009}")
     private val port: Int,
 
     @Value("\${corda.rpc.username}")

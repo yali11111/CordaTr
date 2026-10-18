@@ -4,6 +4,6 @@ server:
 corda:
   rpc:
     host: ${CORDA_RPC_HOST:localhost}
-    port: ${CORDA_RPC_PORT:10006}
+    port: ${CORDA_RPC_PORT:10009}
     username: ${CORDA_RPC_USERNAME:springboot}
     password: ${CORDA_RPC_PASSWORD}

@@ -6,6 +6,18 @@ plugins {
     kotlin("plugin.spring") version "1.9.23"
 }
 
+configurations.configureEach {
+    resolutionStrategy.eachDependency {
+        if (
+            requested.group == "org.apache.activemq" &&
+            requested.name.startsWith("artemis-")
+        ) {
+            useVersion("2.36.0")
+            because("Align Artemis modules with Corda 4.12.5")
+        }
+    }
+}
+
 group = "net.corda.samples"
 version = "1.0.0"
 
@@ -29,10 +41,12 @@ dependencies {
 
     // Client RPC Corda 4.12.5
     implementation("net.corda:corda-rpc:4.12.5")
-
+    implementation("net.corda:corda-core:4.12.5")
     // JAR générés par le build Corda principal
     implementation(files("../contracts/build/libs/contracts-1.0.jar"))
     implementation(files("../workflows/build/libs/workflows-1.0.jar"))
+
+    implementation(project(":workflows"))
 
     testImplementation("org.springframework.boot:spring-boot-starter-test")
 }
