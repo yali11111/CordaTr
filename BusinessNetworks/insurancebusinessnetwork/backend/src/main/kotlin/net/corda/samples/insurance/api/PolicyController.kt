@@ -1,6 +1,6 @@
 package net.corda.samples.insurance.api
 
-import net.corda.client.rpc.CordaRPCOps
+import net.corda.core.messaging.CordaRPCOps
 import net.corda.core.utilities.getOrThrow
 import net.corda.samples.insurance.flows.CreateInsurancePolicyFlow
 import net.corda.samples.insurance.states.InsurancePolicyState
@@ -13,6 +13,10 @@ import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.ResponseStatus
 import org.springframework.web.bind.annotation.RestController
 import org.springframework.web.server.ResponseStatusException
+import net.corda.core.node.services.Vault
+import net.corda.core.node.services.vault.QueryCriteria
+import net.corda.core.node.services.vault.PageSpecification
+import net.corda.core.node.services.vault.Sort
 
 data class CreatePolicyRequest(
     val networkId: String,
@@ -35,13 +39,23 @@ class PolicyController(
     private val cordaRpcOps: CordaRPCOps
 ) {
 
+    
     @GetMapping
-    fun getPolicies(): List<PolicyResponse> {
-        return cordaRpcOps
-            .vaultQueryBy(InsurancePolicyState::class.java)
-            .states
-            .map { it.state.data.toResponse() }
-    }
+fun getPolicies(): List<PolicyResponse> {
+    val criteria = QueryCriteria.VaultQueryCriteria(
+        status = Vault.StateStatus.UNCONSUMED
+    )
+
+    return cordaRpcOps
+        .vaultQueryBy(
+            criteria,
+            PageSpecification(1, 200),
+            Sort(emptySet()),
+            InsurancePolicyState::class.java
+        )
+        .states
+        .map { stateAndRef -> stateAndRef.state.data.toResponse() }
+}
 
     @GetMapping("/{id}")
     fun getPolicy(@PathVariable id: String): PolicyResponse {
