@@ -46,7 +46,6 @@ dependencies {
     implementation(files("../contracts/build/libs/contracts-1.0.jar"))
     implementation(files("../workflows/build/libs/workflows-1.0.jar"))
 
-    implementation(project(":workflows"))
 
     testImplementation("org.springframework.boot:spring-boot-starter-test")
 }

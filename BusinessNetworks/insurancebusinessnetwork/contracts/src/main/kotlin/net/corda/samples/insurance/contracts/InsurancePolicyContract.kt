@@ -17,7 +17,7 @@ class InsurancePolicyContract : Contract {
     }
 
     override fun verify(tx: LedgerTransaction) {
-        val command = tx.commands.requireSingleCommand<Commands>()
+        val command = tx.commands.single()
 
         when (command.value) {
             is Commands.Create -> {
